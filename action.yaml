@@ -150,24 +150,25 @@ runs:
         mv ${{ github.workspace }}/python-client ${{ github.workspace }}/clients/
       shell: bash
 
-    # - uses: casperdcl/push-dir@v1
-    #   with:
-    #         message: update code
-    #         branch: client-code
-    #         dir: clients
-    #         history: true
-    #         name: github-action-bot
-
-    - uses: GuillaumeFalourd/git-commit-push@v1.3
+    - uses: casperdcl/push-dir@v1
       with:
-        email: github-action-bot@users.noreply.github.com
-        name: github-action-bot
-        commit_message: update code
-        target_branch: client-code
-        files: clients
-        access_token: ${{ github.token }}
-        force: true
-        empty: true
+          message: update code
+          branch: client-code
+          dir: clients
+          history: true
+          name: github-action-bot
+          email: github-action-bot@users.noreply.github.com
+
+    # - uses: GuillaumeFalourd/git-commit-push@v1.3
+    #   with:
+    #     email: github-action-bot@users.noreply.github.com
+    #     name: github-action-bot
+    #     commit_message: update code
+    #     target_branch: client-code
+    #     files: clients
+    #     access_token: ${{ github.token }}
+    #     force: true
+    #     empty: true
     # - name: "push to client-code branch"
     #   run: |
     #     git pull origin client-code
