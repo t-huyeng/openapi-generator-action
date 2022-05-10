@@ -127,15 +127,15 @@ runs:
       run: |
         git status
         git pull
-        git config --local user.email "bundesAPI@users.noreply.github.com"
-        git config --local user.name "bundesbot"
+        git config --local user.name "OpenAPI"
+        git checkout -b client-code
         git add ${{ github.workspace }}/python-client
         git commit --allow-empty -m "Generate newest code from openapi.yaml" -a
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
 
     - name: "Push changes"
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@client-code
       with:
         github_token: ${{ github.token }}
         branch: ${{ github.ref }}
