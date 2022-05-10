@@ -151,14 +151,14 @@ runs:
 
     - uses: casperdcl/push-dir@v1
       with:
-          message: update static site
-          branch: client-code
-          dir: clients
-          history: false
-          name: github-action-bot
-          email: github-action-bot@users.noreply.github.com
+        message: update generated code
+        branch: client-code
+        dir: clients
+        history: true
+        name: github-action-bot
+        email: github-action-bot@users.noreply.github.com
 
-# this is working but no name or email for the commit to branch (uses default user)
+    # this is working but no name or email for the commit to branch (uses default user)
     # - name: "push files to client-code branch"
     #   uses: s0/git-publish-subdir-action@develop
     #   env:
@@ -168,18 +168,16 @@ runs:
     #     GITHUB_TOKEN: ${{ github.token }}
     #     MESSAGE: update generated code
 
-
-
-# adding all files --------
-      # uses: github-actions-x/commit@v2.9
-      # with:
-        # github-token: ${{ github.token }}
-        # push-branch: "client-code"
-        # commit-message: "publish"
-        # force-add: "true"
-        # files: clients/
-        # name: github-action-bot
-        # email: github-action-bot@users.noreply.github.com
+    # adding all files --------
+    # uses: github-actions-x/commit@v2.9
+    # with:
+    # github-token: ${{ github.token }}
+    # push-branch: "client-code"
+    # commit-message: "publish"
+    # force-add: "true"
+    # files: clients/
+    # name: github-action-bot
+    # email: github-action-bot@users.noreply.github.com
 
     # - uses: GuillaumeFalourd/git-commit-push@v1.3
     #   with:
@@ -191,8 +189,7 @@ runs:
     #     access_token: ${{ github.token }}
     #     force: true
     #     empty: true
-# adding all files --------
-
+    # adding all files --------
 
     # - name: "push to client-code branch"
     #   run: |
