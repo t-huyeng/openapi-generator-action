@@ -124,12 +124,12 @@ runs:
     - uses: actions/checkout@v3
     - name: "push to client-code branch"
       run: |
+        git pull
         date > generated.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
         git status
         git checkout -b client-code
-        git pull
         git status
         git add generated.txt
         git commit -m "generated"
