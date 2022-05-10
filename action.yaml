@@ -50,7 +50,7 @@ runs:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: "Checkout"
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: "setup python"
       uses: actions/setup-python@v2
@@ -121,7 +121,7 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
-    - uses: actions/checkout@v3
+
     - name: "push to client-code branch"
       run: |
         git pull
@@ -129,11 +129,11 @@ runs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git status
-        git checkout -b client-code
+        git checkout client-code
         git status
         git add generated.txt
         git commit -m "generated"
-        git push origin client-code
+        git push
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
 
