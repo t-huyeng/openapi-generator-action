@@ -123,33 +123,35 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
-    # - name: "Add and Commit files to client-code branch"
-    #   run: |
-    #     git status
-    #     git pull
-    #     git config --local user.name "OpenAPI"
-    #     git checkout -b client-code
-    #     git add ${{ github.workspace }}/python-client
-    #     git commit --allow-empty -m "Generate newest code from openapi.yaml" -a
-    #   shell: bash
+    # - name: Deploy
+    #   uses: s0/git-publish-subdir-action@develop
+    #   env:
+    #     REPO: self
+    #     BRANCH: python-client
+    #     FOLDER: python-client
+    #     MESSAGE: "Generate newest code from openapi.yaml"
+    #     GITHUB_TOKEN: ${{ github.token }}
     #   if: ${{ inputs.commit-to-git == 'true' }}
 
-    - name: Deploy
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: client-code
-        FOLDER: python-client
-        MESSAGE: "Generate newest code from openapi.yaml"
-        GITHUB_TOKEN: ${{ github.token }}
+    - name: "Add and Commit files to client-code branch"
+      run: |
+        git status
+        git pull
+        git config --local user.name "OpenAPI"
+        git checkout -b client-code
+        git add ${{ github.workspace }}/python-client
+        git commit --allow-empty -m "Generate newest code from openapi.yaml" -a
+      shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
 
-    # - name: "Push changes to client-code branch"
-    #   uses: ad-m/github-push-action@master
-    #   with:
-    #     github_token: ${{ github.token }}
-    #     branch: client-code
-    #   if: ${{ inputs.commit-to-git == 'true' }}
+
+    - name: "Push changes to client-code branch"
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ github.token }}
+        branch: client-code
+        directory: python-client
+      if: ${{ inputs.commit-to-git == 'true' }}
 
     - name: "Install pypa/build and twine for uploading"
       run: >-
