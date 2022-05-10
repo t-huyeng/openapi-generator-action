@@ -157,6 +157,7 @@ runs:
         history: true
         name: github-action-bot
         email: github-action-bot@users.noreply.github.com
+        force: true
 
     # this is working but no name or email for the commit to branch (uses default user)
     # - name: "push files to client-code branch"
