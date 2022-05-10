@@ -55,7 +55,7 @@ runs:
     - name: "switch branch"
       run: |
         git pull
-        git switch client-code
+        git checkout $(git show-ref --verify --quiet refs/heads/<branch> || echo '-b') client-code
         git status
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
@@ -129,7 +129,6 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
-
     - name: "push to client-code branch"
       run: |
         git pull
@@ -138,7 +137,8 @@ runs:
         git config user.email github-actions@github.com
         git status
         git add generated.txt
-        git commit -m "generated"
+        git add ${{ github.workspace }}/python-client/
+        git commit -m "generated new client code"
         git push
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
