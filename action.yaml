@@ -131,7 +131,7 @@ runs:
 
     - name: "push to client-code branch"
       run: |
-        git pull
+        git pull origin client-code
         date > generated.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
@@ -139,7 +139,7 @@ runs:
         git add generated.txt
         git add ${{ github.workspace }}/python-client/
         git commit -m "generated new client code"
-        git push
+        git push origin client-code
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
 
