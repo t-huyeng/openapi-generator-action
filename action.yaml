@@ -54,6 +54,7 @@ runs:
 
     - name: "switch branch"
       run: |
+        git pull
         git switch client-code
         git status
       shell: bash
