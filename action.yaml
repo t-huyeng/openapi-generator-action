@@ -141,6 +141,7 @@ runs:
         BRANCH: client-code
         FOLDER: python-client
         MESSAGE: "Generate newest code from openapi.yaml"
+        GITHUB_TOKEN: ${{ github.token }}
       if: ${{ inputs.commit-to-git == 'true' }}
 
     # - name: "Push changes to client-code branch"
