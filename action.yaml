@@ -227,12 +227,12 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: "postprocessed-code"
-        path: ${{ github.workspace }}/python-client # or path/to/artifact
+        path: ${{ github.workspace }}/clients/python-client # or path/to/artifact
 
     # Upload to TestPyPI
     - name: Upload to TestPyPI using twine
       run: |
-        cd ${{ github.workspace }}/python-client
+        cd ${{ github.workspace }}/clients/python-client
         python -m twine upload --skip-existing dist/*
       env:
         TWINE_USERNAME: __token__
@@ -250,7 +250,7 @@ runs:
     # Upload to PyPI
     - name: Upload to TestPyPI using twine
       run: |
-        cd ${{ github.workspace }}/python-client
+        cd ${{ github.workspace }}/clients/python-client
         python -m twine upload --skip-existing dist/*
       env:
         TWINE_USERNAME: __token__
