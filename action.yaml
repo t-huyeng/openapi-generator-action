@@ -127,8 +127,10 @@ runs:
         date > generated.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
+        git status
         git checkout -b client-code
-        git add ./python-client
+        git status
+        git add generated.txt
         git commit -m "generated"
         git push origin client-code
       shell: bash
