@@ -220,7 +220,7 @@ runs:
 
     - name: "Build a binary wheel and a source tarball using build module"
       run: |
-        cd ${{ github.workspace }}/python-client
+        cd ${{ github.workspace }}/clients/python-client
         python -m build --sdist --wheel --outdir dist/
       shell: bash
 
