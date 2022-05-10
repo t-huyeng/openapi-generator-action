@@ -134,7 +134,7 @@ runs:
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
 
-    - name: "Push changes"
+    - name: "Push changes to client-code branch"
       uses: ad-m/github-push-action@client-code
       with:
         github_token: ${{ github.token }}
