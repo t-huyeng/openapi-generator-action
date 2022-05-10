@@ -150,15 +150,21 @@ runs:
       shell: bash
 
     - name: push
-      uses: github-actions-x/commit@v2.9
-      with:
-        github-token: ${{ github.token }}
-        push-branch: "client-code"
-        commit-message: "publish"
-        force-add: "true"
-        files: clients/
-        name: github-action-bot
-        email: github-action-bot@users.noreply.github.com
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: client-code
+        FOLDER: clients
+        GITHUB_TOKEN: ${{ github.token }}
+      # uses: github-actions-x/commit@v2.9
+      # with:
+        # github-token: ${{ github.token }}
+        # push-branch: "client-code"
+        # commit-message: "publish"
+        # force-add: "true"
+        # files: clients/
+        # name: github-action-bot
+        # email: github-action-bot@users.noreply.github.com
 
     # - uses: GuillaumeFalourd/git-commit-push@v1.3
     #   with:
