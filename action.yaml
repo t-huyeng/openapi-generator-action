@@ -123,7 +123,7 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
-    - name: "Add and Commit files"
+    - name: "Add and Commit files to client-code branch"
       run: |
         git status
         git pull
