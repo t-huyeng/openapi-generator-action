@@ -61,9 +61,9 @@ runs:
             echo develop branch exists
           else
             echo client-code branch does not exists
-            git checkout -b client-code
+            git switch --orphan client-code
             git commit --allow-empty -m "added branch"
-            git push origin client-code
+            git push -u origin client-code
           fi
       shell: bash
 
