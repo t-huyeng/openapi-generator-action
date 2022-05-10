@@ -149,13 +149,28 @@ runs:
         mv ${{ github.workspace }}/python-client ${{ github.workspace }}/clients/
       shell: bash
 
-    - name: push
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: client-code
-        FOLDER: clients
-        GITHUB_TOKEN: ${{ github.token }}
+    - uses: casperdcl/push-dir@v1
+      with:
+          message: update static site
+          branch: client-code
+          dir: clients
+          history: false
+          name: github-action-bot
+          email: github-action-bot@users.noreply.github.com
+
+# this is working but no name or email for the commit to branch (uses default user)
+    # - name: "push files to client-code branch"
+    #   uses: s0/git-publish-subdir-action@develop
+    #   env:
+    #     REPO: self
+    #     BRANCH: client-code
+    #     FOLDER: clients
+    #     GITHUB_TOKEN: ${{ github.token }}
+    #     MESSAGE: update generated code
+
+
+
+# adding all files --------
       # uses: github-actions-x/commit@v2.9
       # with:
         # github-token: ${{ github.token }}
@@ -176,6 +191,9 @@ runs:
     #     access_token: ${{ github.token }}
     #     force: true
     #     empty: true
+# adding all files --------
+
+
     # - name: "push to client-code branch"
     #   run: |
     #     git pull origin client-code
