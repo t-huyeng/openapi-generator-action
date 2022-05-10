@@ -8,7 +8,7 @@ inputs:
   openapi-file:
     description: "The path to the OpenAPI document to generate a client library for"
     required: true
-    default: 'openapi.yaml'
+    default: "openapi.yaml"
   commit-to-git:
     description: "Should the generated code be added to git"
     required: false
@@ -24,16 +24,15 @@ inputs:
   pypi-token:
     description: "Token to upload package to pypi"
     required: false
-    default: 'undefined'
+    default: "undefined"
   testpypi-token:
     description: "Token to upload package to testpypi"
     required: false
-    default: 'undefined'
+    default: "undefined"
   python-version:
     description: "Python version to run on"
     required: true
     default: 3.7
-
 
 runs:
   using: composite
@@ -48,7 +47,6 @@ runs:
         echo -e "\nTestPypi Token:" ${{ inputs.testpypi-token }} | head -c18
         echo -e "\nPython Version:" ${{ inputs.python-version }}
       shell: bash
-
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: "Checkout"
@@ -123,6 +121,19 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
+    - uses: actions/checkout@v3
+    - name: "push to client-code branch"
+      run: |
+        date > generated.txt
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git checkout -b client-code
+        git add ./python-client
+        git commit -m "generated"
+        git push origin client-code
+      shell: bash
+      if: ${{ inputs.commit-to-git == 'true' }}
+
     # - name: Deploy
     #   uses: s0/git-publish-subdir-action@develop
     #   env:
@@ -133,25 +144,25 @@ runs:
     #     GITHUB_TOKEN: ${{ github.token }}
     #   if: ${{ inputs.commit-to-git == 'true' }}
 
-    - name: "Add and Commit files to client-code branch"
-      run: |
-        git status
-        git pull
-        git config --local user.name "OpenAPI"
-        git checkout -b client-code
-        git add ${{ github.workspace }}/python-client
-        git commit --allow-empty -m "Generate newest code from openapi.yaml" -a
-      shell: bash
-      if: ${{ inputs.commit-to-git == 'true' }}
+    # - name: "Add and Commit files to client-code branch"
+    #   run: |
+    #     git status
+    #     git pull
+    #     git config --local user.name "OpenAPI"
+    #     git checkout -b client-code
+    #     git add ${{ github.workspace }}/python-client
+    #     git status
+    #     git commit --allow-empty -m "Generate newest code from openapi.yaml" -a
+    #   shell: bash
+    #   if: ${{ inputs.commit-to-git == 'true' }}
 
-
-    - name: "Push changes to client-code branch"
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ github.token }}
-        branch: client-code
-        directory: python-client
-      if: ${{ inputs.commit-to-git == 'true' }}
+    # - name: "Push changes to client-code branch"
+    #   uses: ad-m/github-push-action@master
+    #   with:
+    #     github_token: ${{ github.token }}
+    #     branch: client-code
+    #     directory: python-client
+    #   if: ${{ inputs.commit-to-git == 'true' }}
 
     - name: "Install pypa/build and twine for uploading"
       run: >-
@@ -189,7 +200,6 @@ runs:
         echo "Skip upload to testpypi due to input upload-to-testpypi set to false"
       shell: bash
       if: ${{ inputs.upload-to-testpypi == 'false' }}
-
 
     # Upload to PyPI
     - name: Upload to TestPyPI using twine
