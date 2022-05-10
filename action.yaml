@@ -129,6 +129,7 @@ runs:
         git config user.email github-actions@github.com
         git status
         git checkout -b client-code
+        git pull
         git status
         git add generated.txt
         git commit -m "generated"
