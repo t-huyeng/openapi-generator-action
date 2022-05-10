@@ -59,12 +59,15 @@ runs:
             echo develop branch exists
           else
             echo client-code branch does not exists
+            git checkout -b client-code
+            git commit -m "added branch"
+            git push origin client-code
           fi
       shell: bash
 
     - name: "switch branch"
       run: |
-        git checkout $(git show-ref --verify --quiet refs/heads/client-code || echo '-b') client-code
+        git checkout client-code
         git status
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
