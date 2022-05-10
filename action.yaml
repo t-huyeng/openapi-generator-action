@@ -52,6 +52,13 @@ runs:
     - name: "Checkout"
       uses: actions/checkout@v3
 
+    - name: "switch branch"
+      run: |
+        git switch client-code
+        git status
+      shell: bash
+      if: ${{ inputs.commit-to-git == 'true' }}
+
     - name: "setup python"
       uses: actions/setup-python@v2
       with:
@@ -128,8 +135,6 @@ runs:
         date > generated.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git status
-        git checkout client-code
         git status
         git add generated.txt
         git commit -m "generated"
