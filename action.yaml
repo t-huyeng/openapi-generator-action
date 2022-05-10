@@ -55,7 +55,7 @@ runs:
     - name: "switch branch"
       run: |
         git pull
-        git checkout $(git show-ref --verify --quiet refs/heads/<branch> || echo '-b') client-code
+        git checkout $(git show-ref --verify --quiet refs/heads/client-code || echo '-b') client-code
         git status
       shell: bash
       if: ${{ inputs.commit-to-git == 'true' }}
