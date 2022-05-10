@@ -62,7 +62,7 @@ runs:
           else
             echo client-code branch does not exists
             git checkout -b client-code
-            git commit -m "added branch"
+            git commit --allow-empty -m "added branch"
             git push origin client-code
           fi
       shell: bash
