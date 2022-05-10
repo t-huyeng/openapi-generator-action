@@ -52,9 +52,18 @@ runs:
     - name: "Checkout"
       uses: actions/checkout@v3
 
+    - name: "check if branch exists"
+      run: |
+          git pull
+          if git show-ref --quiet refs/heads/client-code; then
+            echo develop branch exists
+          else
+            echo client-code branch does not exists
+          fi
+      shell: bash
+
     - name: "switch branch"
       run: |
-        git pull
         git checkout $(git show-ref --verify --quiet refs/heads/client-code || echo '-b') client-code
         git status
       shell: bash
