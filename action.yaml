@@ -52,27 +52,27 @@ runs:
     - name: "Checkout"
       uses: actions/checkout@v3
 
-    - name: "check if branch exists"
-      run: |
-          git pull
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          if git show-ref --quiet refs/heads/client-code; then
-            echo develop branch exists
-          else
-            echo client-code branch does not exists
-            git switch --orphan client-code
-            git commit --allow-empty -m "added branch"
-            git push -u origin client-code
-          fi
-      shell: bash
+    # - name: "check if branch exists"
+    #   run: |
+    #       git pull
+    #       git config user.name github-actions
+    #       git config user.email github-actions@github.com
+    #       if git show-ref --quiet refs/heads/client-code; then
+    #         echo develop branch exists
+    #       else
+    #         echo client-code branch does not exists
+    #         git switch --orphan client-code
+    #         git commit --allow-empty -m "added branch"
+    #         git push -u origin client-code
+    #       fi
+    #   shell: bash
 
-    - name: "switch branch"
-      run: |
-        git checkout client-code
-        git status
-      shell: bash
-      if: ${{ inputs.commit-to-git == 'true' }}
+    # - name: "switch branch"
+    #   run: |
+    #     git checkout client-code
+    #     git status
+    #   shell: bash
+    #   if: ${{ inputs.commit-to-git == 'true' }}
 
     - name: "setup python"
       uses: actions/setup-python@v2
@@ -104,6 +104,7 @@ runs:
         echo "======================== Python Client ===================================="
         ls ${{ github.workspace }}/python-client
       shell: bash
+
 
     - name: "execute py script" # run the run.py to get the latest data
       run: |
@@ -143,17 +144,30 @@ runs:
         isort  --profile black ${{ github.workspace }}/python-client/
       shell: bash
 
-    - name: "push to client-code branch"
+    - name: "move file to client-folder"
       run: |
-        git pull origin client-code
-        date > generated.txt
-        git status
-        git add generated.txt
-        git add ${{ github.workspace }}/python-client/
-        git commit -m "generated new client code"
-        git push origin client-code
+        mkdir -p clients
+        mv ${{ github.workspace }}/python-client ${{ github.workspace }}/clients/
       shell: bash
-      if: ${{ inputs.commit-to-git == 'true' }}
+
+    - uses: casperdcl/push-dir@v1
+      with:
+            message: update code
+            branch: client-code
+            dir: clients
+            history: true
+            name: github-action-bot
+    # - name: "push to client-code branch"
+    #   run: |
+    #     git pull origin client-code
+    #     date > generated.txt
+    #     git status
+    #     git add generated.txt
+    #     git add ${{ github.workspace }}/python-client/
+    #     git commit -m "generated new client code"
+    #     git push origin client-code
+    #   shell: bash
+    #   if: ${{ inputs.commit-to-git == 'true' }}
 
     # - name: Deploy
     #   uses: s0/git-publish-subdir-action@develop
